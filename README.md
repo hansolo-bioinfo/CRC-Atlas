@@ -1,1 +1,1 @@
-# CRC-Atlas
+# CRCAtlas

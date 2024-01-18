@@ -3,14 +3,6 @@ library(shinyjs)
 library(ggplot2)
 #library(GSVA)
 
-options(shiny.maxRequestSize = 50*1024^2)
-
-# load data
-load("data/lr_search_data_light.RData")
-lr_result <- read.csv("data/LR_passed_results_valid.csv", check.names = FALSE)
-lr_names <- paste0(lr_result$`ligand(L)`, " -> ", lr_result$`receptor(R)`)
-gem_names <- names(top50)
-
 #' Scatter Plot of dose response curve
 #' 
 #' @param dose "ligand -> receptor"
@@ -18,6 +10,7 @@ gem_names <- names(top50)
 #' @param n_para number of parameters in fitting nonlinear sigmoid function
 #' 
 #' @import drc
+#' @importFrom drc drm
 .plotLR <- function(dose, response, n_para) {
     l <- unlist(strsplit(dose, " -> "))[1]
     r <- unlist(strsplit(dose, " -> "))[2]
@@ -73,9 +66,21 @@ gem_names <- names(top50)
 #' ShinyApp for CRC Atlas
 #' 
 #' @import GSVA
+#' @import ggpubr
+#' @importFrom GSAA gsva
+#' @importFrom ggpubr ggarrange
 #'
 #' @export
 CRCAtlasApp <- function(...) {
+    
+    options(shiny.maxRequestSize = 50*1024^2)
+    
+    # load data
+    load("data/lr_search_data_light.RData")
+    lr_result <- read.csv("data/LR_passed_results_valid.csv", check.names = FALSE)
+    lr_names <- paste0(lr_result$`ligand(L)`, " -> ", lr_result$`receptor(R)`)
+    gem_names <- names(top50)
+    
     ui <- navbarPage(
         title = "CRC Atlas",
         theme = bslib::bs_theme(4),

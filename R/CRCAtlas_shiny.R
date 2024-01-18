@@ -11,8 +11,14 @@ lr_result <- read.csv("data/LR_passed_results_valid.csv", check.names = FALSE)
 lr_names <- paste0(lr_result$`ligand(L)`, " -> ", lr_result$`receptor(R)`)
 gem_names <- names(top50)
 
-# helper function
-plotLR <- function(dose, response, n_para) {
+#' Scatter Plot of dose response curve
+#' 
+#' @param dose "ligand -> receptor"
+#' @param response gem name
+#' @param n_para number of parameters in fitting nonlinear sigmoid function
+#' 
+#' @import drc
+.plotLR <- function(dose, response, n_para) {
     l <- unlist(strsplit(dose, " -> "))[1]
     r <- unlist(strsplit(dose, " -> "))[2]
     
@@ -64,6 +70,11 @@ plotLR <- function(dose, response, n_para) {
     f
 }
 
+#' ShinyApp for CRC Atlas
+#' 
+#' @import GSVA
+#'
+#' @export
 CRCAtlasApp <- function(...) {
     ui <- navbarPage(
         title = "CRC Atlas",
@@ -291,7 +302,7 @@ CRCAtlasApp <- function(...) {
                 
                 f_lst <- list()
                 for (i in 1:10) {
-                    f_lst[[i]] <- plotLR(dose     = db$`ligand -> receptor`[i], 
+                    f_lst[[i]] <- .plotLR(dose     = db$`ligand -> receptor`[i], 
                                          response = db$GEM[i],
                                          n_para   = 2)
                 }

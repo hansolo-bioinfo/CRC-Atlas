@@ -3,5 +3,7 @@
 export(CRCAtlasApp)
 import(GSVA)
 import(drc)
+import(ggpubr)
 importFrom(GSVA,gsva)
 importFrom(drc,drm)
+importFrom(ggpubr,ggarrange)

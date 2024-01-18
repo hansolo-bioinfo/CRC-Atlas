@@ -3,3 +3,5 @@
 export(CRCAtlasApp)
 import(GSVA)
 import(drc)
+importFrom(GSVA,gsva)
+importFrom(drc,drm)

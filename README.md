@@ -4,6 +4,8 @@ CRC Atlas is an interactive web server that is built on R Shiny for researchers 
 
 Citation: (biorxiv link if applicable)
 
+*The website is coming soon...*
+
 <img width="1897" alt="Screenshot 2024-01-21 at 16 34 30" src="https://github.com/hansolo-bioinfo/CRCAtlas/assets/65295899/b4483fc2-d893-4bdf-81e4-899683a1aef0">
 
 ## Installation

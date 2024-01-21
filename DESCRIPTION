@@ -1,6 +1,6 @@
 Package: CRCAtlas
 Title: CRCAtlas
-Version: 0.0.0.11
+Version: 0.0.0.12
 Authors@R: 
     person("Han", "Zhang", , "haz96@pitt.edu", role = c("aut", "cre"))
 Description: What the package does (one paragraph).

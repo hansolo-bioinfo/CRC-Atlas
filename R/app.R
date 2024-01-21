@@ -8,10 +8,12 @@ library(ggplot2)
 #' @param dose "ligand -> receptor"
 #' @param response gem name
 #' @param n_para number of parameters in fitting nonlinear sigmoid function
+#' @param gsva gsva result for the gems
+#' @param npn_norm npn normalized expression data
 #' 
 #' @import drc
 #' @importFrom drc drm
-.plotLR <- function(dose, response, n_para) {
+.plotLR <- function(dose, response, n_para, gsva, npn_norm) {
     l <- unlist(strsplit(dose, " -> "))[1]
     r <- unlist(strsplit(dose, " -> "))[2]
     
@@ -76,8 +78,8 @@ CRCAtlasApp <- function(...) {
     options(shiny.maxRequestSize = 50*1024^2)
     
     # load data
-    load("data/lr_search_data_light.RData")
-    lr_result <- read.csv("data/LR_passed_results_valid.csv", check.names = FALSE)
+    load("data/built-in_data.RData")
+    #lr_result <- read.csv("data/LR_passed_results_valid.csv", check.names = FALSE)
     lr_names <- paste0(lr_result$`ligand(L)`, " -> ", lr_result$`receptor(R)`)
     gem_names <- names(top50)
     
@@ -308,8 +310,10 @@ CRCAtlasApp <- function(...) {
                 f_lst <- list()
                 for (i in 1:10) {
                     f_lst[[i]] <- .plotLR(dose     = db$`ligand -> receptor`[i], 
-                                         response = db$GEM[i],
-                                         n_para   = 2)
+                                         response  = db$GEM[i],
+                                         n_para    = 2, 
+                                         gsva      = gsva,
+                                         npn_norm  = npn_norm)
                 }
                 f_lst <- ggpubr::ggarrange(plotlist = f_lst, nrow = 2, ncol = 5, align = "h")
                 f_lst

@@ -78,7 +78,12 @@ CRCAtlasApp <- function(...) {
     options(shiny.maxRequestSize = 50*1024^2)
     
     # load data
-    load("data/built-in_data.RData")
+    builtin_file <- system.file("data", "built-in_data.RData", package = "CRCAtlas")
+    if (file.exists(builtin_file)) {
+        load(builtin_file)
+    } else {
+        stop("Error: Built-in data not found!\n")
+    }
     #lr_result <- read.csv("data/LR_passed_results_valid.csv", check.names = FALSE)
     lr_names <- paste0(lr_result$`ligand(L)`, " -> ", lr_result$`receptor(R)`)
     gem_names <- names(top50)
@@ -265,7 +270,7 @@ CRCAtlasApp <- function(...) {
     )
     
     server <- function(input, output, session) {
-        addResourcePath("imgs", "inst/www/")
+        addResourcePath("imgs", system.file("www", package = "CRCAtlas"))
         
         # ---- GEM Information ----
         observeEvent(input$inquire_stat_button, {
@@ -411,7 +416,8 @@ CRCAtlasApp <- function(...) {
                 "expression_example.csv" 
             },
             content = function(file) {
-                file.copy("data/expression_example.csv", file)
+                expr_file <- system.file("data", "expression_example.csv", package = "CRCAtlas")
+                file.copy(expr_file, file)
             }
         )
         
